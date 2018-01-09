@@ -84,6 +84,24 @@ public class IndexController {
      * http://localhost:8080/ssh/persons?persons[0].name=name0&persons[0].age=0&persons[1].name=name1&persons[1].age=1
      *
      * @param persons persons
+     *                var persons = [], result = [];
+     *                for (var i = 0; i < 3; i++) {
+     *                var obj = {};
+     *                obj.name = "name" + i;
+     *                obj.age = i;
+     *                persons.push(obj);
+     *                }
+     *                Globle.buildParams("persons", persons, result);
+     *                $.ajax({
+     *                type: 'post',
+     *                dataType: 'json',
+     *                url: CTX + "/persons",
+     *                data: result.join("&"),
+     *                success: function (result) {
+     *                },
+     *                error: function () {
+     *                }
+     *                });
      */
     @RequestMapping("/persons")
     @ResponseBody

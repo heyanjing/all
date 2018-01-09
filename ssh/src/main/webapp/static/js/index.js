@@ -26,9 +26,7 @@ for (var i = 0; i < 3; i++) {
     obj.age = i;
     persons.push(obj);
 }
-console.log(persons);
 Globle.buildParams("persons", persons, result);
-console.log(result.join("&"));
 $.ajax({
     type: 'post',
     dataType: 'json',
