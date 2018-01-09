@@ -24,6 +24,7 @@ for (var i = 0; i < 3; i++) {
     var obj = {};
     obj.name = "name" + i;
     obj.age = i;
+    obj.birthday="1989-09-19";
     persons.push(obj);
 }
 Globle.buildParams("persons", persons, result);
@@ -55,3 +56,6 @@ $.ajax({
 
     }
 });
+var str="persons[0][name][age]=何彦静";
+console.log(str);
+console.log(str.replace(/\[([a-zA-Z]+)]/gi, '.$1'));

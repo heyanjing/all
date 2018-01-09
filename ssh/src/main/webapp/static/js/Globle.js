@@ -19,7 +19,7 @@ var Globle = {
             }
         } else {
             var temp = me.keyValueStr(prefix, obj);
-            result.push(temp.replace(/\[(\D+)]/, '.$1'));
+            result.push(temp.replace(/\[([a-zA-Z]+)]/gi, '.$1'));
         }
     }
 }
