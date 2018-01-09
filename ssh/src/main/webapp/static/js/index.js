@@ -56,6 +56,14 @@ $.ajax({
 
     }
 });
-var str="persons[0][name][age]=何彦静";
+var str="persons[0][name]=何彦静";
+
 console.log(str);
-console.log(str.replace(/\[([a-zA-Z]+)]/gi, '.$1'));
+console.log(str.replace(/\[([a-zA-Z]+)]/gi, function (str,a,b,c,e,f,g) {
+    // console.log(str)//[name]
+    // console.log(a)// name
+    // console.log(b)// 10
+    // console.log(c)// persons[0][name][age]=何彦静
+    return "."+a;
+}));
+console.log(str.replace(/\[([a-zA-Z]+)]/gi,".$1"));
