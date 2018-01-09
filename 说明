@@ -1,0 +1,47 @@
+制作自己的maven骨架
+将quick-all,quick-start,quick-webapp从github上导出,然后每个导出文件执行一下操作
+删掉导出文件的.git文件,
+ctrl+alt+s 选中 version control,将右侧的VCS调整为none
+
+再执行以下操作
+
+1.安装该archetype项目到你的本地仓库。
+    mvn clean archetype:create-from-project
+2进入到archetype目录下，也就是到达我们项目的根目录执行：
+    cd target/generated-sources/archetype/
+    mvn install
+3执行crawl命令，生成archetype-catalog.xml：
+    mvn archetype:crawl
+
+
+idea使用自己的maven骨架
+    新建一个maven项目 ，选择add archtype 把刚刚生成的项目添加进去,根据仓库路径填写好路径，点击ok就可以把模板添加进去了
+
+
+quick-all包含普通的maven项目和web的maven项目。如果需要在该模板下继续添加web或普通的maven项目需要quick-start和quick-webapp
+以上模板在github上有
+
+
+
+
+
+
+
+
+
+scope	    编译期	测试期	运行期	说明
+*compile	V	    V	    V	    默认scope
+test	 	        V	 	        只在测试期依赖，如junit包
+provided	V	    V	 	        运行期由容器提供，如servlet-api包
+runtime	 	        V	    V	    编译期间不需要直接引用
+system	    V	V	 	            编译和测试时由本机环境提供
+
+
+
+
+
+
+
+
+
+
