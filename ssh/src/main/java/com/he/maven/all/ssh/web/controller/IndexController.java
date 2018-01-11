@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ContextLoader;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +26,7 @@ public class IndexController {
     private static final Logger log = LoggerFactory.getLogger(IndexController.class);
 
     @GetMapping(value = {"", "/"})
-    public String index() {
+    public String index(HttpServletRequest request, HttpServletResponse response) {
         ServletContext servletContext = ContextLoader.getCurrentWebApplicationContext().getServletContext();
         log.warn("{}", servletContext);
         return "/index";

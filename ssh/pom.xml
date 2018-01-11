@@ -138,6 +138,10 @@
             <artifactId>poi-ooxml-schemas</artifactId>
         </dependency>
         <!--endregion-->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv-platform</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <finalName>ssh</finalName>
