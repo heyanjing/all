@@ -138,10 +138,38 @@
             <artifactId>poi-ooxml-schemas</artifactId>
         </dependency>
         <!--endregion-->
-        <dependency>
+
+        <!--<dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>javacv-platform</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv</artifactId>
+            <version>1.3.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacpp</artifactId>
+            <version>1.3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco.javacpp-presets</groupId>
+            <artifactId>ffmpeg</artifactId>
+            <version>3.2.1-1.3</version>
+            <classifier>windows-x86_64</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco.javacpp-presets</groupId>
+            <artifactId>opencv</artifactId>
+            <version>3.2.0-1.3</version>
+            <classifier>windows-x86_64</classifier>
+        </dependency>
+        <!--<dependency>
+            <groupId>org.bytedeco.javacpp-presets</groupId>
+            <artifactId>ffmpeg-platform</artifactId>
+            <version>3.2.1-1.3</version>
+        </dependency>-->
     </dependencies>
     <build>
         <finalName>ssh</finalName>
