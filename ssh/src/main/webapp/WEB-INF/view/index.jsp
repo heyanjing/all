@@ -9,6 +9,8 @@
 </head>
 <body>
 <div class="index">首页body中的内容</div>
+<img src="${CTX}/code/gif"/>
+<img src="${CTX}/code/jpg"/>
 <script type="text/javascript" src="${JS}/index.js?${V}"></script>
 
 </body>
