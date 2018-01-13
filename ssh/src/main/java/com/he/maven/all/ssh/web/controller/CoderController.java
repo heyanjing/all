@@ -15,23 +15,24 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/code")
-public class CoderController  {
+public class CoderController {
     private static final Logger log = LoggerFactory.getLogger(CoderController.class);
-    private static final String attrCode  = "_code";
+    private static final String attrCode = "_code";
 
     /**
      * http /code/gif
      */
     @RequestMapping(value = "gif", method = RequestMethod.GET)
     public void gif(HttpServletResponse response, HttpServletRequest request) {
-        generateCode(response,request,new GifCaptcha(146, 33, 4));
+        generateCode(response, request, new GifCaptcha(146, 33, 4));
     }
+
     /**
      * http /code/jpg
      */
     @RequestMapping(value = "jpg", method = RequestMethod.GET)
     public void jpg(HttpServletResponse response, HttpServletRequest request) {
-        generateCode(response,request,new SpecCaptcha(146, 33, 4));
+        generateCode(response, request, new SpecCaptcha(146, 33, 4));
     }
 
     private void generateCode(HttpServletResponse response, HttpServletRequest request, Captcha captcha) {
@@ -43,6 +44,8 @@ public class CoderController  {
             captcha.out(response.getOutputStream());
             HttpSession session = request.getSession();
             session.setAttribute("_code", captcha.text().toLowerCase());
+            log.warn(captcha.text().toLowerCase());
+            log.warn("{}",session.getAttribute("_code"));
         } catch (Exception e) {
             log.error("{}", e);
         }

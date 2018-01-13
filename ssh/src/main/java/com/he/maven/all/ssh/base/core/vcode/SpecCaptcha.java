@@ -62,8 +62,7 @@ public class SpecCaptcha extends Captcha
             for(int i=0;i<15;i++){
                 color = color(150, 250);
                 g.setColor(color);
-                g.drawOval(num(width), num(height), 5+num(10), 5+num(10));// 画蛋蛋，有蛋的生活才精彩
-                color = null;
+                g.drawLine(num(width), num(height), 5+num(10), 5+num(10));// 画蛋蛋，有蛋的生活才精彩
             }
             g.setFont(font);
             int h  = height - ((height - font.getSize()) >>1),
