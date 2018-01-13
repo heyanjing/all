@@ -42,6 +42,7 @@ public class CoderController {
             response.setDateHeader("Expires", 0);
             response.setContentType("image/jpg");
             captcha.out(response.getOutputStream());
+
             HttpSession session = request.getSession();
             session.setAttribute("_code", captcha.text().toLowerCase());
             log.warn(captcha.text().toLowerCase());
