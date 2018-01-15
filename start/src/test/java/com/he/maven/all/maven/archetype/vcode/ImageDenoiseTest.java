@@ -10,12 +10,9 @@ import java.io.File;
 public class ImageDenoiseTest {
     @Test
     public void cleanImage() throws Exception {
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i <100; i++) {
             ImageDenoise.cleanImage(new File("D:\\ide\\temp\\original", i + ".png"), "D:\\ide\\temp\\denoise");
         }
-//        for (int i = 0; i < 20; i++) {
-//            ImageDenoise.cleanImage(new File("D:\\ide\\temp\\denoise", i + ".png"), "D:\\ide\\temp\\denoise2");
-//        }
     }
 
 

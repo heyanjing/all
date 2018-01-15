@@ -14,9 +14,9 @@ public class SpecCaptchaTest {
     private static final Logger log = LoggerFactory.getLogger(SpecCaptchaTest.class);
     @Test
     public void out() throws Exception {
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 100; i++) {
             File file = new File("D:\\ide\\temp\\original", i + ".png");
-            SpecCaptcha captcha = new SpecCaptcha(146, 33, 4);
+            SpecCaptcha captcha = new SpecCaptcha(146, 34, 4);
             captcha.out(new FileOutputStream(file));
             log.info(captcha.text());
         }
