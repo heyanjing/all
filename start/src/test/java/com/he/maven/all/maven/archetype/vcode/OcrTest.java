@@ -130,13 +130,15 @@ public class OcrTest {
         String tessdataPath = "D:\\opt\\Tess4J\\tessdata";
         String lange = "eng";
 //        lange = "chi_sim";
+        lange = "num";
         int ok=0;
         for (int i = 0; i < 100; i++) {
             String imgPath = "D:\\ide\\temp\\original\\" + i + ".png";
             imgPath = "D:\\ide\\temp\\denoise\\" + i + ".png";
             String result = Ocr.recognize(tessdataPath, lange, imgPath);
-//            log.info(result.replaceAll("\\n", ""));
-            if(result.replaceAll("\\n", "").equals(orinalList.get(i))){
+            result=result.replaceAll("\\n", "").replaceAll(" ","");
+            log.info(result);
+            if(result.equals(orinalList.get(i))){
                 ok++;
             }else{
                 log.warn("未识别{}",i);
