@@ -34,14 +34,25 @@ public class AppTest {
         //如果未将tessdata放在根目录下需要指定绝对路径
         instance.setDatapath("C:\\temp\\Tess4J\\tessdata");
         // 我们需要指定识别语种
-        instance.setLanguage("chi_sim");
+        //instance.setLanguage("chi_sim");
         //instance.setLanguage("eng");
-        // 指定识别图片
+        instance.setLanguage("num");
+       /* // 指定识别图片
         File imgDir = new File("C:\\temp\\xw.png");
         long startTime = System.currentTimeMillis();
         String ocrResult = instance.doOCR(imgDir);
         // 输出识别结果
-        System.out.println("OCR Result: \n" + ocrResult + "\n 耗时：" + (System.currentTimeMillis() - startTime) + "ms");
+        System.out.println("OCR Result: \n" + ocrResult + "\n 耗时：" + (System.currentTimeMillis() - startTime) + "ms");*/
+
+        for (int i = 0; i < 15; i++) {
+
+            //log.info("{}",i);
+            if(i==8)continue;
+            File imgDir = new File("C:\\temp\\convert", i + ".png");
+            long startTime = System.currentTimeMillis();
+            String ocrResult = instance.doOCR(imgDir);
+            log.info(ocrResult.replaceAll("\\n",""));
+        }
 
     }
 }

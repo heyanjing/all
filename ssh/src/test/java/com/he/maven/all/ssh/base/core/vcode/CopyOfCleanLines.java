@@ -1,23 +1,51 @@
-package com.he.maven.all.maven.archetype.vcode;
+package com.he.maven.all.ssh.base.core.vcode;
+
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by heyanjing on 2018/1/13 22:06.
+ * Created by heyanjing on 2018/1/15 10:50.
  */
-public class ImageDenoise {
+public class CopyOfCleanLines {
+private static final Logger log = LoggerFactory.getLogger(CopyOfCleanLines.class);
+    @Test
+    public void t()throws Exception {
+        for (int i = 0; i < 200; i++) {
+            cleanLinesInImage(new File("C:\\temp\\original",i+".png"), "C:\\temp\\convertx",new File("C:\\temp\\original",i+".png").getName());
+        }
 
+    }
+    @Test
+    public void t2()throws Exception {
+            cleanLinesInImage(new File("C:\\temp\\original",1+".png"), "C:\\temp\\convertx",1+"c.png");
+
+    }
+
+
+
+    public static void main(String[] args) throws IOException {
+        File testDataDir = new File("imgWithLines");
+        final String destDir = testDataDir.getAbsolutePath() + "/tmp";
+        for (File file : testDataDir.listFiles()) {
+            cleanLinesInImage(file, destDir,file.getName());
+            cleanLinesInImage(file, destDir,file.getName());
+            cleanLinesInImage(file, destDir,file.getName());
+        }
+    }
 
     /**
      * @param sfile   需要去噪的图像
      * @param destDir 去噪后的图像保存地址
      * @throws IOException
      */
-    public static void cleanImage(File sfile, String destDir) throws IOException {
+    public static void cleanLinesInImage(File sfile, String destDir,String filename) throws IOException {
         File destF = new File(destDir);
         if (!destF.exists()) {
             destF.mkdirs();
@@ -33,7 +61,7 @@ public class ImageDenoise {
             for (int y = 0; y < h; y++) {
                 int argb = bufferedImage.getRGB(x, y);
                 // 图像加亮（调整亮度识别率非常高）
-                int r = (int) (((argb >> 16) & 0xFF) * 1.1 + 30);
+                int r = (int) (((argb >> 16) & 0xFF) * 1.1 + 30);//原值30
                 int g = (int) (((argb >> 8) & 0xFF) * 1.1 + 30);
                 int b = (int) (((argb >> 0) & 0xFF) * 1.1 + 30);
                 if (r >= 255) {
@@ -52,8 +80,10 @@ public class ImageDenoise {
         }
 
         // 二值化
-        int threshold = ostu(gray, w, h);
-        System.out.println(threshold);
+        int threshold = ostu(gray, w, h);//217
+        log.info("{}",threshold);
+        //threshold=232;
+        //threshold=215;
         BufferedImage binaryBufferedImage = new BufferedImage(w, h, BufferedImage.TYPE_BYTE_BINARY);
         for (int x = 0; x < w; x++) {
             for (int y = 0; y < h; y++) {
@@ -65,7 +95,8 @@ public class ImageDenoise {
                 binaryBufferedImage.setRGB(x, y, gray[x][y]);
             }
         }
-//去除干扰线条
+
+        //去除干扰线条
         for (int y = 1; y < h - 1; y++) {
             for (int x = 1; x < w - 1; x++) {
                 boolean flag = false;
@@ -92,19 +123,20 @@ public class ImageDenoise {
             }
         }
 
-        // 矩阵打印
-//        for (int y = 0; y < h; y++) {
-//            for (int x = 0; x < w; x++) {
-//                if (isBlack(binaryBufferedImage.getRGB(x, y))) {
-//                    System.out.print("*");
-//                } else {
-//                    System.out.print(" ");
-//                }
-//            }
-//            System.out.println();
-//        }
 
-        ImageIO.write(binaryBufferedImage, "png", new File(destDir, sfile.getName()));
+        // 矩阵打印
+        //for (int y = 0; y < h; y++) {
+        //    for (int x = 0; x < w; x++) {
+        //        if (isBlack(binaryBufferedImage.getRGB(x, y))) {
+        //            System.out.print("*");
+        //        } else {
+        //            System.out.print(" ");
+        //        }
+        //    }
+        //    System.out.println();
+        //}
+
+        ImageIO.write(binaryBufferedImage, "png", new File(destDir, filename));
     }
 
     public static boolean isBlack(int colorInt) {
