@@ -3,9 +3,13 @@ package com.he.maven.all.ssh.web.controller;
 import com.he.maven.all.ssh.base.bean.Result;
 import com.he.maven.all.ssh.base.bean.Results;
 import com.he.maven.all.ssh.base.core.poi.Excel;
+import com.he.maven.all.ssh.web.service.FileUploadService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -24,16 +29,22 @@ import java.nio.channels.FileChannel;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * Created by heyanjing on 2017/12/20 11:06.
  */
 @Controller
 @RequestMapping("/file/upload")
+@Slf4j
 public class FileUploadController {
-    private static final Logger log = LoggerFactory.getLogger(FileUploadController.class);
+    //private static final Logger log = LoggerFactory.getLogger(FileUploadController.class);
     public static Object[] head = {"资产编号", "资产大类", "资产分类", "资产名称", "财务入账日期", "会计凭证号", "取得日期", "价值类型", "数量", "单价", "价值", "取得方式", "使用状况", "使用方向", "使用部门", "管理部门", "存放地点", "使用人", "面积", "制单人", "制单时间", "规格型号", "产权形式", "折旧状态", "折旧方法", "累计折旧", "净值", "折旧年限", "自定义编号", "备注", "清查编号", "原资产编号", "车辆行驶证所有人", "车辆识别号", "车辆产地", "发动机号"};
 
+    @Autowired
+    private FileUploadService fileUploadService;
+    @Autowired
+    private ThreadPoolTaskExecutor myThreadPool;
 
     /**
      * @http /file/upload/import
@@ -137,10 +148,47 @@ public class FileUploadController {
         log.info(file.getSize() + "");//402026
         log.info("{}", file.isEmpty());//false
 
-        file.transferTo(new File(tempfile, fileMd5 + chunk));//保存文件
-//        file.transferTo(new File("D:/Temp"+File.separator+file.getOriginalFilename()));//保存文件
+
+        if (fileMd5 == null) {
+            file.transferTo(new File("D:/Temp" + File.separator + file.getOriginalFilename()));//保存文件
+        } else {
+            file.transferTo(new File(tempfile, fileMd5 + chunk));//保存文件
+        }
 
         return Results.success();
+    }
+
+    /**
+     * 异步文件上传
+     *
+     * @http /file/upload/asyncUpload
+     */
+    @PostMapping("/asyncUpload")
+    @ResponseBody
+    public Callable<Result> asyncUpload(@RequestParam("file") MultipartFile file) throws IOException {
+        log.info(Thread.currentThread().getName());
+        return () -> {
+            log.info(Thread.currentThread().getName());
+            return this.fileUploadService.upload(file);
+        };
+    }
+
+    /**
+     * 异步文件上传
+     *
+     * @http /file/upload/asyncUpload2
+     */
+    @PostMapping("/asyncUpload2")
+    @ResponseBody
+    public DeferredResult<Result> asyncUpload2(@RequestParam("file") MultipartFile file) throws IOException {
+        DeferredResult<Result> result = new DeferredResult<>();
+        log.info(Thread.currentThread().getName());
+
+        myThreadPool.execute(() -> {
+            log.info(Thread.currentThread().getName());
+            result.setResult(this.fileUploadService.upload(file));
+        });
+        return result;
     }
 
     /**

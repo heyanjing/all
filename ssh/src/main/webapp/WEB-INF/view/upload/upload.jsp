@@ -9,6 +9,28 @@
 <h1>Spring MVC - File Upload Example</h1>
 <hr />
 
+<h3>async file Upload2</h3>
+<form action="${CTX}/file/upload/asyncUpload2" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td>Select File</td>
+            <td><input type="file" name="file"></td>
+            <td><button type="submit">Upload</button></td>
+        </tr>
+    </table>
+</form>
+<br />
+<h3>async file Upload</h3>
+<form action="${CTX}/file/upload/asyncUpload" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td>Select File</td>
+            <td><input type="file" name="file"></td>
+            <td><button type="submit">Upload</button></td>
+        </tr>
+    </table>
+</form>
+<br />
 <h3>Single file Upload</h3>
 <form action="${CTX}/file/upload/singleFileUpload" method="post" enctype="multipart/form-data">
     <table>

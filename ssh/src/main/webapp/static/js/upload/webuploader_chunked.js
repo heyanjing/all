@@ -85,7 +85,7 @@ $(function(){
 
     var uploader = WebUploader.create({
         // swf文件路径
-        swf: LIBS + '/webuploader/Uploader.swf',
+        swf: LIB + '/webuploader/Uploader.swf',
         // 文件接收服务端。
         server:CTX+'/file/upload/singleFileUpload',
         // 选择文件的按钮。可选。

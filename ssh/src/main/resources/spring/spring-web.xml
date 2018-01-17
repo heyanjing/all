@@ -42,5 +42,22 @@
                 </property>
             </bean>
         </mvc:message-converters>
+        <mvc:async-support task-executor="myThreadPool" default-timeout="6000"  ><!--定义6秒为默认值  DeferredResult 可以通过setXX方法更改默认值,Callable  也可以封装成WebAsyncTask 并通过setXX方法更改-->
+            <mvc:callable-interceptors>
+                <bean class="com.he.maven.all.ssh.base.core.async.MyCallableInterceptor"/>
+            </mvc:callable-interceptors>
+            <mvc:deferred-result-interceptors>
+                <bean class="com.he.maven.all.ssh.base.core.async.MyDeferredResultInterceptor"/>
+            </mvc:deferred-result-interceptors>
+        </mvc:async-support>
     </mvc:annotation-driven>
+
+    <!--异步任务的线程池-->
+    <bean id="myThreadPool" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="5"/><!--最小线程数 -->
+        <property name="maxPoolSize" value="10"/><!--最大线程数 -->
+        <property name="queueCapacity" value="50"/><!--缓冲队列大小 -->
+        <property name="threadNamePrefix" value="abc-"/><!--线程池中产生的线程名字前缀 -->
+        <property name="keepAliveSeconds" value="30"/><!--线程池中空闲线程的存活时间单位秒 -->
+    </bean>
 </beans>
