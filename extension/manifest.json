@@ -1,0 +1,31 @@
+{
+	"name": "何彦静",
+	"version": "0.0.1",
+	"manifest_version": 2,
+	"description": "chrome plug analyse and guard the http hijack",
+	"icons": {
+		"16": "image/icon16.png",
+		"48": "image/icon48.png"
+	},
+	"browser_action": {
+		"default_title": "反劫持",
+		"default_icon": "image/icon16.png",
+		"default_popup": "html/popup.html"
+	},
+	"content_scripts": [
+		{
+			"js": ["js/jquery-1.12.4.js","js/main.js"],
+			"matches": [
+				"http://*/*",
+				"https://*/*"
+			],
+			"run_at": "document_start"
+		}
+	],
+	"permissions": [
+		"http://*/*",
+		"https://*/*",
+		"contentSettings",
+		"tabs"
+	]
+}
