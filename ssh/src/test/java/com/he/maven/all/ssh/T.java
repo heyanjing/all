@@ -1,5 +1,6 @@
-package com.he.maven.all.ssh.test;
+package com.he.maven.all.ssh;
 
+import com.he.maven.all.ssh.base.core.Https;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,14 @@ import java.util.regex.Pattern;
  */
 public class T {
     private static final Logger log = LoggerFactory.getLogger(T.class);
+
+    @Test
+    public void t2() throws Exception {
+        String result = Https.get("http://www.timingbar.com/static/kaptcha.jpg", null);
+        log.info(result);
+        result = Https.get("http://www.he.com:8080/ssh/user/findAll", null);
+        log.info(result);
+    }
 
     @Test
     public void t() {

@@ -34,6 +34,7 @@ public class Img {
         List<String> result = Guava.newArrayList();
         Matcher matcher = pattern.matcher(imgBase64);
         while (matcher.find()) {
+            log.info(matcher.group());
             String suffix = matcher.group(3);
             String base64 = matcher.group(4);
             BASE64Decoder decoder = new BASE64Decoder();

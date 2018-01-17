@@ -93,6 +93,17 @@ document.body.appendChild(newImg);
 //
 //     }
 // });
+$.ajax({
+    type: 'get',
+    dataType: 'json',
+    url:"http://www.timingbar.com/static/kaptcha.jpg",
+    success: function (result) {
+        console.log(result);
+    },
+    error: function () {
+
+    }
+});
 
 //
 // test();
