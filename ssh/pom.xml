@@ -57,6 +57,10 @@
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
         <!--endregion-->
         <!--spring + jackson + aspectjweaver + springdata-->
         <!--region Description-->

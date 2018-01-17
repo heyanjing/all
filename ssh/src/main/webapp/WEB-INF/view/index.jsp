@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="${CSS}/index.css?${V}"/>
 </head>
 <body>
-<div class="index">首页body中的内容</div>
+<div class="index">首页body中的内容${now}</div>
 <%--<img src="${CTX}/code/gif"/>--%>
 <img id="img1"  src="${CTX}/code/jpg"/>
 <canvas id="canvas1">1</canvas>

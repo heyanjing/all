@@ -55,6 +55,10 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath*:spring/spring-web*.xml</param-value>
         </init-param>
+        <init-param>
+            <param-name>throwExceptionIfNoHandlerFound</param-name>
+            <param-value>true</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
         <async-supported>true</async-supported><!--// MEINFO:2017/11/29 9:50 使用 Servlet 3 的异步请求处理 DispatcherServlet 和任意 Filter 的配置都需要有 <async-supported>true</async-supported> 子元件 -->
     </servlet>

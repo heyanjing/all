@@ -6,8 +6,6 @@ import com.he.maven.all.ssh.base.core.poi.Excel;
 import com.he.maven.all.ssh.web.service.FileUploadService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.async.DeferredResult;
+import org.springframework.web.context.request.async.WebAsyncTask;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -176,6 +175,29 @@ public class FileUploadController {
     /**
      * 异步文件上传
      *
+     * @http /file/upload/asyncUpload3
+     */
+    @PostMapping("/asyncUpload3")
+    @ResponseBody
+    public WebAsyncTask asyncUpload3(@RequestParam("file") MultipartFile file) throws IOException {
+        Callable<Result> callable = () -> {
+            log.info(Thread.currentThread().getName());
+            return this.fileUploadService.upload(file);
+        };
+        WebAsyncTask asyncTask = new WebAsyncTask( callable);
+        asyncTask.onTimeout(() -> {
+            log.info(Thread.currentThread().getName());
+            return Result.failure("超时了");
+        });
+        asyncTask.onCompletion(()->{
+            log.info(Thread.currentThread().getName());
+        });
+        return asyncTask;
+    }
+
+    /**
+     * 异步文件上传2
+     *
      * @http /file/upload/asyncUpload2
      */
     @PostMapping("/asyncUpload2")
@@ -186,7 +208,18 @@ public class FileUploadController {
 
         myThreadPool.execute(() -> {
             log.info(Thread.currentThread().getName());
+//            在这里面发生异常时，会判定为超时
+//            if(true){
+//                throw new RuntimeException("垂直了2");
+//            }
             result.setResult(this.fileUploadService.upload(file));
+        });
+//        result.onCompletion(() -> {
+//            log.info(Thread.currentThread().getName());
+//        });
+        result.onTimeout(() -> {
+            log.info(Thread.currentThread().getName());
+            result.setResult(Result.failure("超时"));
         });
         return result;
     }

@@ -17,6 +17,7 @@
         <lang3.version>3.7</lang3.version>
         <beanutils.version>1.9.3</beanutils.version>
         <codec.version>1.11</codec.version>
+        <guava.version>23.6-jre</guava.version>
 
         <servlet.version>3.1.0</servlet.version>
         <jstl.version>1.2</jstl.version>
@@ -101,6 +102,11 @@
                 <groupId>commons-fileupload</groupId>
                 <artifactId>commons-fileupload</artifactId>
                 <version>${fileupload.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
             <!--endregion-->
             <!--spring + jackson + aspectjweaver + springdata-->
