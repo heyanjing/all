@@ -1,19 +1,65 @@
 package com.he.maven.all.ssh.base.core.img;
 
+import com.he.maven.all.ssh.base.core.Guava;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sun.misc.BASE64Decoder;
+
 import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by heyanjing on 2018/1/12 10:50.
  */
 public class Img {
+    private static final Logger log = LoggerFactory.getLogger(Img.class);
+    private static final Pattern pattern = Pattern.compile("data:((\\w+)/(\\w+));base64,(.+)");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+
+    public static List<String> base64ToImg(String imgBase64, String fileDir) throws IOException {
+        List<String> result = Guava.newArrayList();
+        Matcher matcher = pattern.matcher(imgBase64);
+        while (matcher.find()) {
+            String suffix = matcher.group(3);
+            String base64 = matcher.group(4);
+            BASE64Decoder decoder = new BASE64Decoder();
+            byte[] b = decoder.decodeBuffer(base64);
+            for (int i = 0; i < b.length; i++) {
+                //调整异常数据
+                if (b[i] < 0) {
+                    b[i] += 256;
+                }
+            }
+            ByteArrayInputStream in = new ByteArrayInputStream(b);
+            String img = DATE_TIME_FORMATTER.format(LocalDateTime.now()) + "." + suffix;
+            BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(new File(fileDir, img)));
+            byte[] bb = new byte[1024];
+            int len;
+            while ((len = in.read(bb)) != -1) {
+                out.write(bb, 0, len);
+            }
+            out.close();
+            in.close();
+            result.add(img);
+        }
+        return result;
+    }
+
+
     /**
      * 给图片增加文字水印
      *

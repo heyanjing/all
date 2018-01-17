@@ -70,8 +70,8 @@ console.log(str.replace(/\[([a-zA-Z]+)]/gi, ".$1"));
 
 var img = document.getElementById("img1"), canvas1 = document.getElementById("canvas1");
 canvas1.style.backgroundColor = "cornsilk";
-canvas1.height= img.height;
-canvas1.width= img.width;
+canvas1.height = img.height;
+canvas1.width = img.width;
 var ctx1 = canvas1.getContext("2d");
 ctx1.drawImage(img, 0, 0, img.width, img.height);
 var url = canvas1.toDataURL();
@@ -79,7 +79,20 @@ var newImg = document.createElement("img");
 newImg.style.backgroundColor = "cornsilk";
 newImg.src = url;
 document.body.appendChild(newImg);
-
+// $.ajax({
+//     type: 'post',
+//     dataType: 'json',
+//     url: CTX + "/code/base64Img",
+//     data: {
+//         base64Img: url
+//     },
+//     success: function (result) {
+//         console.log(result);
+//     },
+//     error: function () {
+//
+//     }
+// });
 
 //
 // test();
