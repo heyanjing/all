@@ -34,6 +34,10 @@
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
         <dispatcher>ASYNC</dispatcher><!--// MEINFO:2017/11/29 9:50 使用 Servlet 3 的异步请求处理 DispatcherServlet 和任意 Filter 的配置都需要有 <async-supported>true</async-supported> 子元件 -->
     </filter-mapping>
     <!--// MEINFO:2017/12/16 16:53 sitemesh-->
@@ -45,6 +49,10 @@
     <filter-mapping>
         <filter-name>sitemesh</filter-name>
         <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
         <dispatcher>ASYNC</dispatcher><!--// MEINFO:2017/11/29 9:50 使用 Servlet 3 的异步请求处理 DispatcherServlet 和任意 Filter 的配置都需要有 <async-supported>true</async-supported> 子元件 -->
     </filter-mapping>
     <!--// MEINFO:2017/12/16 16:53 SpringMVC-->

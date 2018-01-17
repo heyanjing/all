@@ -26,7 +26,7 @@ public class MyCallableInterceptor implements CallableProcessingInterceptor {
     public <T> void postProcess(NativeWebRequest nativeWebRequest, Callable<T> callable, Object o) throws Exception {
         log.info("postProcess3333333");
         Result r = (Result) o;
-        r.setMsg("改不了");
+        r.setMsg("成功可以改，超时不能改");
     }
 
     @Override
