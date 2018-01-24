@@ -12,8 +12,25 @@ $(function () {
     // module.fun2()
     // module.fun3()
 
-    原型链继承()
+    // 原型链继承()
+
+    多线程();
+
+
 });
+
+function 多线程() {
+    var worker = new Worker("../work.js");
+    worker.onmessage = function (e) {
+        console.log(e);
+    }
+    worker.postMessage({
+        a: 1,
+        b: "xx"
+    });
+}
+
+
 function 原型链继承() {
     function Supper(name, age) {
         this.name = name;
