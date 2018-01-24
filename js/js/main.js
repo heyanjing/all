@@ -2,14 +2,80 @@ $(function () {
     // 基本类型理解();
     // 函数Call方法();
     // 原型prototype();
-});
 
-console.log(xx);
-var xx=1;
+    // var module = window.闭包({
+    //     opt1: "opt11",
+    //     opt2: "opt22",
+    //     opt3: "opt33"
+    // });
+    // module.fun1()
+    // module.fun2()
+    // module.fun3()
+
+    原型链继承()
+});
+function 原型链继承() {
+    function Supper(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    Supper.prototype.setName = function (name) {
+        this.name = name;
+    }
+    Supper.prototype.setAge = function (age) {
+        this.age = age;
+    }
+    function Sub(name, age, address) {
+        Supper.call(this, name, age);//为了得到属性
+        this.address = address;
+    }
+
+    Sub.prototype = new Supper();//为了得到supper的方法
+    Sub.prototype.constructor = Sub;//对constructor的修正
+    Sub.prototype.setAddress = function (address) {
+        this.address = address;
+    }
+    var sub = new Sub("sub", 11, "sub address");
+    console.log(sub);
+    sub.setName("new sub")
+    sub.setAge(22)
+    sub.setAddress("new sub address")
+    console.log(sub);
+}
 
 /**
+ *
+ * 内部函数引用外部函数的变量，变量就会形成闭包
+ */
+function 闭包(options) {
+    var defaultOptions = {
+        opt1: "opt1",
+        opt2: "opt2",
+        opt3: "opt3"
+    }
+
+    function fun1() {
+        console.log(options.opt1);
+    }
+
+    function fun2() {
+        console.log(options.opt1);
+    }
+
+    function fun3() {
+        console.log(options.opt3);
+    }
+
+    return {
+        fun1: fun1,
+        fun2: fun2,
+        fun3: fun3
+    }
+}
+/**
  * 每个函数都有一个prototype属性,他默认是一个Object实例,称之为显示原型对象
- * 显示原型对象中有一个constructor属性,他指向函数对象
+ * 显示原型对象中有一个constructor属性,他指向构造函数对象本身
  * 函数的每个实例对象都有一个__proto__属性,称之为隐式原型
  * 实例对象的隐式原型值等于构造函数的显示原型
  */
@@ -27,6 +93,7 @@ function 原型prototype() {
     console.log(Fun.prototype);
     var fun = new Fun();
     fun.方法1();
+    console.log(fun);
     console.log(fun.__proto__, fun.__proto__ === Fun.prototype);
 
     console.log(Function.prototype === Function.__proto__);
