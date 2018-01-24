@@ -6,11 +6,12 @@
 
 
 <script type="text/javascript" src="${JQUERY}/jquery-3.2.1.js"></script>
-<script type="text/javascript" src="${JS}/Globle.js?${V}"></script>
 <script type="text/javascript" src="${BOOTSTRAP}/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 <script type="text/javascript" src="${WEBUPLOADER}/webuploader.js"></script>
+<script type="text/javascript" src="${VUE}/vue-2.5.13/dist/vue.js"></script>
 
 
+<script type="text/javascript" src="${JS}/Globle.js?${V}"></script>
 
 
 <%@include file="/WEB-INF/layout/taglib/jsTaglib.jsp"%>
