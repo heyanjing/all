@@ -10,25 +10,31 @@
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
 
-    <!-- 配置数据源 -->
+    <!--&lt;!&ndash; 配置数据源 &ndash;&gt;
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="user" value="${jdbc.user}"/>
         <property name="password" value="${jdbc.password}"/>
         <property name="driverClass" value="${jdbc.driverClass}"/>
         <property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>
-        <!-- 请求超时时间 -->
+        &lt;!&ndash; 请求超时时间 &ndash;&gt;
         <property name="checkoutTimeout" value="30000"/>
-        <!-- 每60秒检查所有连接池中的空闲连接。默认值: 0，不检查 -->
+        &lt;!&ndash; 每60秒检查所有连接池中的空闲连接。默认值: 0，不检查 &ndash;&gt;
         <property name="idleConnectionTestPeriod" value="30"/>
-        <!-- 连接数据库连接池最大空闲时间 -->
+        &lt;!&ndash; 连接数据库连接池最大空闲时间 &ndash;&gt;
         <property name="maxIdleTime" value="30"/>
-        <!-- 连接池初始化连接数 -->
+        &lt;!&ndash; 连接池初始化连接数 &ndash;&gt;
         <property name="initialPoolSize" value="5"/>
         <property name="minPoolSize" value="5"/>
         <property name="maxPoolSize" value="20"/>
-        <!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。默认值: 3 -->
+        &lt;!&ndash;当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。默认值: 3 &ndash;&gt;
         <property name="acquireIncrement" value="5"/>
-    </bean>
+    </bean>-->
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+                <property name="driverClassName" value="${jdbc.driverClass}"/>
+                <property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>
+                <property name="username" value="${jdbc.user}"/>
+                <property name="password" value="${jdbc.password}"/>
+             </bean>
 
 
     <!-- 配置 JPA 的 EntityManagerFactory -->

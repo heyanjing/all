@@ -190,16 +190,16 @@ public class BaseHibernateDao<T> {
     ///////////////////////// sql////////////////////////////////////
     @SuppressWarnings("unchecked")
     public List<T> findBySql(String sql) {
-        return this.createSqlQuery(sql, null).setResultTransformer(Transformers.aliasToBean(this.entityClass)).list();
+        return this.createSqlQuery(sql, null).setResultTransformer(Java8ResultTransformer.aliasToBean(this.entityClass)).list();
     }
 
     public List<T> findBySql(String sql, Object... params) {
-        return this.createSqlQuery(sql, params).setResultTransformer(Transformers.aliasToBean(this.entityClass)).list();
+        return this.createSqlQuery(sql, params).setResultTransformer(Java8ResultTransformer.aliasToBean(this.entityClass)).list();
     }
 
     @SuppressWarnings("unchecked")
     public List<T> findBySql(String sql, Map<String, ?> params) {
-        return this.createSqlQuery(sql, params).setResultTransformer(Transformers.aliasToBean(this.entityClass)).list();
+        return this.createSqlQuery(sql, params).setResultTransformer(Java8ResultTransformer.aliasToBean(this.entityClass)).list();
     }
 
     ///////////////////////// hql////////////////////////////////////
@@ -236,7 +236,8 @@ public class BaseHibernateDao<T> {
             pageSize = PAGE_SIZE;
         }
         Long count = Long.valueOf(count_query.uniqueResult().toString());
-        List<T> data = data_query.setResultTransformer(Transformers.aliasToBean(this.entityClass)).list();
+        //List<T> data = data_query.setResultTransformer(Transformers.aliasToBean(this.entityClass)).list();
+        List<T> data = data_query.setResultTransformer(Java8ResultTransformer.aliasToBean(this.entityClass)).list();
         return new PageImpl<>(data, PageRequest.of(pageNumber - 1, pageSize), count);
     }
 
@@ -281,17 +282,17 @@ public class BaseHibernateDao<T> {
     ///////////////////////// sql////////////////////////////////////
     @SuppressWarnings("unchecked")
     public <E> List<E> findEntityClassBySql(String sql, Class<E> entityClass) {
-        return this.createSqlQuery(sql, null).setResultTransformer(Transformers.aliasToBean(entityClass)).list();
+        return this.createSqlQuery(sql, null).setResultTransformer(Java8ResultTransformer.aliasToBean(entityClass)).list();
     }
 
     @SuppressWarnings("unchecked")
     public <E> List<E> findEntityClassBySql(String sql, Class<E> entityClass, Object... params) {
-        return this.createSqlQuery(sql, params).setResultTransformer(Transformers.aliasToBean(entityClass)).list();
+        return this.createSqlQuery(sql, params).setResultTransformer(Java8ResultTransformer.aliasToBean(entityClass)).list();
     }
 
     @SuppressWarnings("unchecked")
     public <E> List<E> findEntityClassBySql(String sql, Class<E> entityClass, Map<String, ?> params) {
-        return this.createSqlQuery(sql, params).setResultTransformer(Transformers.aliasToBean(entityClass)).list();
+        return this.createSqlQuery(sql, params).setResultTransformer(Java8ResultTransformer.aliasToBean(entityClass)).list();
     }
 
 
@@ -349,7 +350,7 @@ public class BaseHibernateDao<T> {
 //        Query query = data_query;
 //        List<E> data = query.list();
 
-        List<E> data = data_query.setResultTransformer(Transformers.aliasToBean(entityClass)).list();
+        List<E> data = data_query.setResultTransformer(Java8ResultTransformer.aliasToBean(entityClass)).list();
 
         // List<E> data1 = data_query.setResultTransformer(new AliasToBeanResultTransformer(entityClass)).list();
         // List<E> data2 = data_query.setResultTransformer(new AliasToBeanResultTransformer(entityClass)).list();

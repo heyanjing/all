@@ -7,6 +7,7 @@ import com.he.maven.all.ssh.web.dao.HolidayDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -47,5 +48,13 @@ public class HolidayService {
 
     public List<Holiday> findByMonth(String localDateStr) {
         return this.holidayDao.findByLocalDateStrLikeAndTypeNotAndHolidayTypeIsNotNullOrderByLocalDateAsc(localDateStr + "%", HolidayEnum.txgzr.getValue());
+    }
+
+    public List<Holiday> findAll() {
+        return this.holidayDao.findAll();
+    }
+
+    public Page<Holiday> page(Integer pageNumber, Integer pageSize) {
+        return this.holidayDao.page(pageNumber, pageSize);
     }
 }

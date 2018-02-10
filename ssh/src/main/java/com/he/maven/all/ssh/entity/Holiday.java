@@ -6,6 +6,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * Created by heyanjing on 2017/12/19 9:43.
@@ -22,6 +23,15 @@ public class Holiday extends BaseEntityWithStringId {
     private Integer totalDay;//当年的总天数
     private Integer holidayType;//节假日类型
     private String holidayTypeStr;//节假日类型字符串
+    private Date date;//节假日类型字符串
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public String getHolidayTypeStr() {
         return holidayTypeStr;

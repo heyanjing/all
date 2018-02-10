@@ -5,6 +5,12 @@ $(function () {
     })
     var app = new Vue({
         el: '#app',
+        components: {
+            // <my-component> 将只在父组件模板中可用
+            'my-component': {
+                template: '<div>A custom component!</div>'
+            }
+        },
         data: {
             message: '这是一段文本',
             seen: true,
@@ -18,6 +24,13 @@ $(function () {
                 {id: 1, text: '奶酪'},
                 {id: 2, text: '随便其它什么人吃的东西'}
             ]
+        },
+        watch: {
+            // 如果 `question` 发生改变，这个函数就会运行
+            message: function (newQuestion, oldQuestion) {
+                this.answer = 'Waiting for you to stop typing...'
+                this.getAnswer()
+            }
         },
         methods: {
             reverseMessage: function (e) {
@@ -37,9 +50,6 @@ $(function () {
         created: function () {
             console.log('vue实例化后   message is: ' + this.message)
         },
-    })
-    app.$watch('message', function (newValue, oldValue) {
-        console.log('message 值改变前后值: ' + newValue + '-->' + oldValue)
     })
     setTimeout(function () {
         app.message = "sssxxx";

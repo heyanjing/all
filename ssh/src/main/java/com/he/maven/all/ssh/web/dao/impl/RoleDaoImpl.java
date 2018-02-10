@@ -8,4 +8,5 @@ import com.he.maven.all.ssh.web.dao.custom.RoleCustomDao;
  * Created by heyanjing on 2017/12/19 10:35.
  */
 public class RoleDaoImpl extends BaseJdbcDao<Role> implements RoleCustomDao<Role> {
+
 }
