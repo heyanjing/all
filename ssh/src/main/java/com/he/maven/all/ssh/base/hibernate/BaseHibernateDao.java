@@ -17,7 +17,6 @@ import org.springframework.data.jpa.repository.support.JpaEntityInformationSuppo
 import org.springframework.orm.jpa.EntityManagerFactoryInfo;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
@@ -29,7 +28,7 @@ import java.util.Map;
 /**
  * dao的实现类可以继承该类从而使实现类拥有更多的方法
  */
-@Transactional
+//@Transactional
 public class BaseHibernateDao<T> {
     private static final Logger log = LoggerFactory.getLogger(BaseHibernateDao.class);
     public static final Integer PAGE_NUMBER = 1;
@@ -64,7 +63,11 @@ public class BaseHibernateDao<T> {
         return (Class) params[index];
     }
 
-    @PostConstruct
+    public void xx(){
+        javax.persistence.Query nativeQuery = entityManager.createNativeQuery("");
+    }
+    //@Transactional
+    //@PostConstruct
     public void init() {
         // Entity Info
         this.entityClass = this.getClassGenricType(this.getClass(), 0);
@@ -72,9 +75,17 @@ public class BaseHibernateDao<T> {
         this.entityName = this.entityInformation.getEntityName();
         this.entityIdName = this.entityInformation.getIdAttributeNames().iterator().next();
         // Data Info
+        //this.session = ((Session) getEntityManager().getDelegate()).getSessionFactory().getCurrentSession();
         this.session = ((Session) getEntityManager().getDelegate()).getSessionFactory().openSession();
+        //Session unwrap = entityManager.unwrap(Session.class);
+        //this.session = entityManager.unwrap(Session.class);
         this.dataSource = getEntityManagerFactoryInfo().getDataSource();
 
+    }
+    public void close(){
+        if(this.session!=null){
+            this.getSession().close();
+        }
     }
 
     // ----------------------------------------------------------------
@@ -96,6 +107,7 @@ public class BaseHibernateDao<T> {
     // -----------------创建Query ---------------------------------
     // ----------------------------------------------------------------
     private Query createQuery(String sql, Object params, SqlType queryType) {
+        this.init();
         return this.createQuery(getSession(), sql, params, queryType);
     }
 
@@ -238,6 +250,7 @@ public class BaseHibernateDao<T> {
         Long count = Long.valueOf(count_query.uniqueResult().toString());
         //List<T> data = data_query.setResultTransformer(Transformers.aliasToBean(this.entityClass)).list();
         List<T> data = data_query.setResultTransformer(Java8ResultTransformer.aliasToBean(this.entityClass)).list();
+        //this.close();
         return new PageImpl<>(data, PageRequest.of(pageNumber - 1, pageSize), count);
     }
 
@@ -245,6 +258,7 @@ public class BaseHibernateDao<T> {
         return this.pageBySql(sql, null, params, pageNumber, pageSize);
     }
 
+    @Transactional
     public Page<T> pageBySql(String sql, Integer pageNumber, Integer pageSize, Object... params) {// 没有排序参数
         return this.pageBySql(sql, null, params, pageNumber, pageSize);
     }
